@@ -10,43 +10,51 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
     <style>
       :root {
-        --bg-primary: #0a0a0b;
-        --bg-secondary: #18181b;
-        --bg-tertiary: #27272a;
+        /* Dark Theme Variables */
+        --bg-base: #050505;
+        --bg-surface: #111111;
+        --bg-surface-hover: #1a1a1a;
+        --bg-tertiary: #222222;
 
-        --text-primary: #fafafa;
+        --text-primary: #ffffff;
         --text-secondary: #a1a1aa;
         --text-muted: #71717a;
 
-        --accent: #8b5cf6;
-        --accent-hover: #a78bfa;
+        --accent-primary: #8b5cf6;
+        --accent-secondary: #d946ef;
+        --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        
+        --border-color: rgba(255, 255, 255, 0.08);
+        --border-hover: rgba(255, 255, 255, 0.2);
 
-        --border: #27272a;
-
-        --shadow: rgba(0, 0, 0, 0.35);
+        --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.15);
       }
 
       [data-theme="light"] {
-        --bg-primary: #fafafa;
-        --bg-secondary: #ffffff;
-        --bg-tertiary: #f4f4f5;
+        /* Light Theme Variables */
+        --bg-base: #f8fafc;
+        --bg-surface: #ffffff;
+        --bg-surface-hover: #f1f5f9;
+        --bg-tertiary: #e2e8f0;
 
-        --text-primary: #18181b;
-        --text-secondary: #52525b;
-        --text-muted: #a1a1aa;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
 
-        --accent: #7c3aed;
-        --accent-hover: #8b5cf6;
+        --accent-primary: #7c3aed;
+        --accent-secondary: #c026d3;
+        --accent-gradient: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
 
-        --border: #e4e4e7;
+        --border-color: rgba(0, 0, 0, 0.06);
+        --border-hover: rgba(0, 0, 0, 0.15);
 
-        --shadow: rgba(0, 0, 0, 0.08);
+        --shadow-glow: 0 10px 30px rgba(124, 58, 237, 0.1);
       }
 
       * {
@@ -56,334 +64,522 @@
       }
 
       body {
-        font-family:
-          Inter,
-          -apple-system,
-          BlinkMacSystemFont,
-          sans-serif;
-        background: var(--bg-primary);
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-base);
         color: var(--text-primary);
         min-height: 100vh;
-        line-height: 1.5;
+        line-height: 1.6;
+        transition: background-color 0.4s ease, color 0.4s ease;
+        overflow-x: hidden;
+      }
+
+      /* Animated Background Elements */
+      .bg-blob {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.4;
+        transition: all 0.5s ease;
+      }
+      .blob-1 {
+        top: -10%;
+        left: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(139, 92, 246, 0.3);
+      }
+      .blob-2 {
+        bottom: -10%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: rgba(217, 70, 239, 0.2);
       }
 
       .container {
-        max-width: 1100px;
-        margin: auto;
-        padding: 3rem 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+        position: relative;
+        z-index: 1;
       }
 
-      /* HEADER */
-
+      /* HEADER SECTION */
       header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 3rem;
+        margin-bottom: 5rem;
       }
 
       .logo {
         display: flex;
         align-items: center;
-        gap: 0.7rem;
+        gap: 1rem;
+        text-decoration: none;
       }
 
       .logo-icon {
-        width: 42px;
-        height: 42px;
-        background: var(--accent);
-        border-radius: 10px;
+        width: 48px;
+        height: 48px;
+        background: var(--accent-gradient);
+        border-radius: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: 700;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
         color: white;
+        box-shadow: var(--shadow-glow);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .logo:hover .logo-icon {
+        transform: rotate(-10deg) scale(1.05);
       }
 
       .logo-text {
-        font-size: 1.6rem;
-        font-weight: 700;
-      }
-
-      .theme-toggle {
-        display: flex;
-        gap: 0.5rem;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        letter-spacing: -0.03em;
       }
 
       .theme-btn {
-        width: 38px;
-        height: 38px;
-        border: 1px solid var(--border);
-        background: var(--bg-secondary);
-        border-radius: 10px;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-surface);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 1.2rem;
         color: var(--text-secondary);
-        transition: 0.2s;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
       }
 
       .theme-btn:hover {
-        border-color: var(--accent);
-        color: var(--accent);
+        border-color: var(--border-hover);
+        color: var(--text-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      }
+      
+      .theme-btn .icon {
+        position: absolute;
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+      }
+      
+      .theme-btn .moon {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      
+      .theme-btn .sun {
+        transform: translateY(30px);
+        opacity: 0;
       }
 
-      .theme-btn.active {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: white;
+      [data-theme="light"] .theme-btn .moon {
+        transform: translateY(-30px);
+        opacity: 0;
       }
 
-      /* HERO */
+      [data-theme="light"] .theme-btn .sun {
+        transform: translateY(0);
+        opacity: 1;
+      }
 
+      /* HERO SECTION */
       .hero {
         text-align: center;
-        margin-bottom: 3rem;
+        margin-bottom: 5rem;
+        position: relative;
       }
 
-      .hero h1 {
-        font-size: 2.6rem;
-        margin-bottom: 0.3rem;
-        letter-spacing: -0.02em;
+      .title {
+        font-family: 'Outfit', sans-serif;
+        font-size: clamp(3rem, 6vw, 4.5rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+        background: var(--text-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
       }
 
-      .hero p {
+      .highlight {
+        background: var(--accent-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
         color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: 400;
       }
 
-      /* GRID */
-
+      /* PROJECTS GRID */
       .projects-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1.3rem;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 2rem;
       }
 
-      /* CARD */
-
-      .project-card {
-        background: var(--bg-secondary);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 1.4rem;
-        text-decoration: none;
+      /* PROJECT CARD - Fixed Nested Anchor using ::after on the title link */
+      .card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        padding: 1.75rem;
+        position: relative;
         display: flex;
         flex-direction: column;
-        transition: 0.25s;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        backdrop-filter: blur(10px);
       }
 
-      .project-card:hover {
-        transform: translateY(-3px);
-        border-color: var(--accent);
-        box-shadow: 0 15px 30px var(--shadow);
+      .card:hover {
+        transform: translateY(-8px);
+        border-color: var(--border-hover);
+        box-shadow: var(--shadow-glow);
+        background: var(--bg-surface-hover);
       }
 
-      .project-info {
+      .card-header {
         display: flex;
         align-items: center;
-        gap: 0.9rem;
+        gap: 1.25rem;
       }
 
-      .project-icon {
-        width: 46px;
-        height: 46px;
-        border-radius: 10px;
+      .card-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 14px;
         background: var(--bg-tertiary);
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
         flex-shrink: 0;
+        border: 1px solid var(--border-color);
       }
 
-      .project-icon img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      .card-icon img {
+        width: 65%;
+        height: 65%;
+        object-fit: contain;
       }
 
-      .project-details {
+      .card-content {
         flex: 1;
         min-width: 0;
       }
 
-      .project-name {
-        font-weight: 600;
-        font-size: 1.05rem;
+      .card-title {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 0.25rem;
+      }
+
+      /* The main clickable area spans the whole card */
+      .card-title a {
+        color: inherit;
+        text-decoration: none;
+      }
+      
+      .card-title a::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        border-radius: 20px;
+      }
+
+      .github-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.2s ease;
+        position: relative;
+        z-index: 2; /* Sits above the card click area */
+        font-weight: 500;
+      }
+
+      .github-link:hover {
+        color: var(--accent-primary);
+      }
+
+      .github-link img {
+        width: 14px;
+        height: 14px;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+      }
+
+      .github-link:hover img {
+        opacity: 1;
+      }
+      
+      /* Card external link icon on hover */
+      .card-link-icon {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        opacity: 0;
+        transform: translate(-10px, 10px);
+        transition: all 0.3s ease;
+        color: var(--text-secondary);
+      }
+      
+      .card:hover .card-link-icon {
+        opacity: 1;
+        transform: translate(0, 0);
         color: var(--text-primary);
       }
 
-      .project-github {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.3rem;
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        margin-top: 0.2rem;
-        text-decoration: none;
-        transition: 0.2s;
-      }
-
-      .project-github:hover {
-        color: var(--accent);
-      }
-
-      .project-github img {
-        width: 12px;
-        height: 12px;
-      }
-
       /* FOOTER */
-
       footer {
-        margin-top: 4rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid var(--border);
+        margin-top: 6rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
         text-align: center;
-        font-size: 0.85rem;
-        color: var(--text-muted);
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
       }
 
-      /* MOBILE */
+      .heart {
+        color: #ef4444;
+        display: inline-block;
+        animation: heartbeat 2s infinite;
+      }
 
-      @media (max-width: 640px) {
-        header {
-          flex-direction: column;
-          align-items: flex-start;
-          gap: 1rem;
+      @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        10% { transform: scale(1.2); }
+        20% { transform: scale(1); }
+        30% { transform: scale(1.2); }
+        40% { transform: scale(1); }
+      }
+
+      /* MOBILE RESPONSIVENESS */
+      @media (max-width: 768px) {
+        .container {
+          padding: 2rem 1.5rem;
         }
 
-        .hero h1 {
-          font-size: 2rem;
+        header {
+          margin-bottom: 3rem;
+        }
+
+        .hero {
+          margin-bottom: 3.5rem;
+        }
+
+        .title {
+          font-size: 2.5rem;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
 
   <body>
+    <!-- Background Elements -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
     <div class="container">
       <header>
-        <div class="logo">
+        <a href="#" class="logo">
           <div class="logo-icon">AD</div>
           <div class="logo-text">alpgulDev</div>
-        </div>
+        </a>
 
-        <div class="theme-toggle">
-          <button class="theme-btn active" id="darkBtn">🌙</button>
-          <button class="theme-btn" id="lightBtn">☀️</button>
-        </div>
+        <button class="theme-btn" id="themeBtn" aria-label="Toggle Theme">
+          <span class="icon moon">🌙</span>
+          <span class="icon sun">☀️</span>
+        </button>
       </header>
 
       <section class="hero">
-        <h1>Projects</h1>
-        <p>My HuggingFace Spaces</p>
+        <h1 class="title">My <span class="highlight">Projects</span></h1>
+        <p class="subtitle">A collection of HuggingFace Spaces and open-source contributions.</p>
       </section>
 
       <div class="projects-grid">
-        <a href="OmniRoute/" class="project-card">
-          <div class="project-info">
-            <div class="project-icon">
-              <img src="https://icons.duckduckgo.com/ip3/alpgul-omniroute.hf.space.ico" />
+        <!-- Project 1 -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <img src="https://icons.duckduckgo.com/ip3/alpgul-omniroute.hf.space.ico" alt="OmniRoute Icon" loading="lazy" />
             </div>
-            <div class="project-details">
-              <div class="project-name">OmniRoute</div>
-              <a class="project-github" target="_blank" href="https://github.com/diegosouzapw/OmniRoute">
-                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" />
+            <div class="card-content">
+              <h3 class="card-title">
+                <a href="OmniRoute/">OmniRoute</a>
+              </h3>
+              <a class="github-link" target="_blank" href="https://github.com/diegosouzapw/OmniRoute" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="GitHub" />
                 diegosouzapw/OmniRoute
               </a>
             </div>
           </div>
-        </a>
+          <div class="card-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </article>
 
-        <a href="MCP%20Context%20Forge/" class="project-card">
-          <div class="project-info">
-            <div class="project-icon">
-              <img src="https://icons.duckduckgo.com/ip3/alpgul-mcp-context-forge.hf.space.ico" />
+        <!-- Project 2 -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <img src="https://icons.duckduckgo.com/ip3/alpgul-mcp-context-forge.hf.space.ico" alt="MCP Context Forge Icon" loading="lazy" />
             </div>
-            <div class="project-details">
-              <div class="project-name">MCP Context Forge</div>
-              <a class="project-github" target="_blank" href="https://github.com/IBM/mcp-context-forge">
-                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" />
+            <div class="card-content">
+              <h3 class="card-title">
+                <a href="MCP%20Context%20Forge/">MCP Context Forge</a>
+              </h3>
+              <a class="github-link" target="_blank" href="https://github.com/IBM/mcp-context-forge" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="GitHub" />
                 IBM/mcp-context-forge
               </a>
             </div>
           </div>
-        </a>
+          <div class="card-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </article>
 
-        <a href="MCPHub/" class="project-card">
-          <div class="project-info">
-            <div class="project-icon">
-              <img src="https://icons.duckduckgo.com/ip3/alpgul-mcphub.hf.space.ico" />
+        <!-- Project 3 -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <img src="https://icons.duckduckgo.com/ip3/alpgul-mcphub.hf.space.ico" alt="MCPHub Icon" loading="lazy" />
             </div>
-            <div class="project-details">
-              <div class="project-name">MCPHub</div>
-              <a class="project-github" target="_blank" href="https://github.com/samanhappy/mcphub">
-                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" />
+            <div class="card-content">
+              <h3 class="card-title">
+                <a href="MCPHub/">MCPHub</a>
+              </h3>
+              <a class="github-link" target="_blank" href="https://github.com/samanhappy/mcphub" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="GitHub" />
                 samanhappy/mcphub
               </a>
             </div>
           </div>
-        </a>
+          <div class="card-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </article>
 
-        <a href="Litellm/" class="project-card">
-          <div class="project-info">
-            <div class="project-icon">
-              <img src="https://icons.duckduckgo.com/ip3/alpgul-litellm.hf.space.ico" />
+        <!-- Project 4 -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <img src="https://icons.duckduckgo.com/ip3/alpgul-litellm.hf.space.ico" alt="Litellm Icon" loading="lazy" />
             </div>
-            <div class="project-details">
-              <div class="project-name">Litellm</div>
-              <a class="project-github" target="_blank" href="https://github.com/BerriAI/litellm">
-                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" />
+            <div class="card-content">
+              <h3 class="card-title">
+                <a href="Litellm/">Litellm</a>
+              </h3>
+              <a class="github-link" target="_blank" href="https://github.com/BerriAI/litellm" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="GitHub" />
                 BerriAI/litellm
               </a>
             </div>
           </div>
-        </a>
+          <div class="card-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </article>
 
-        <a href="OpenWebUI/" class="project-card">
-          <div class="project-info">
-            <div class="project-icon">
-              <img src="https://icons.duckduckgo.com/ip3/alpgul-openwebui.hf.space.ico" />
+        <!-- Project 5 -->
+        <article class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <img src="https://icons.duckduckgo.com/ip3/alpgul-openwebui.hf.space.ico" alt="OpenWebUI Icon" loading="lazy" />
             </div>
-            <div class="project-details">
-              <div class="project-name">OpenWebUI</div>
-              <a class="project-github" target="_blank" href="https://github.com/open-webui/open-webui">
-                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" />
+            <div class="card-content">
+              <h3 class="card-title">
+                <a href="OpenWebUI/">OpenWebUI</a>
+              </h3>
+              <a class="github-link" target="_blank" href="https://github.com/open-webui/open-webui" rel="noopener noreferrer">
+                <img src="https://www.google.com/s2/favicons?domain=github.com&sz=32" alt="GitHub" />
                 open-webui/open-webui
               </a>
             </div>
           </div>
-        </a>
+          <div class="card-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </div>
+        </article>
       </div>
 
-      <footer>© 2026 alpgulDev</footer>
+      <footer>
+        <p>Built with <span class="heart">♥</span> by alpgulDev</p>
+        <p>&copy; 2026 All Rights Reserved.</p>
+      </footer>
     </div>
 
     <script>
-      const darkBtn = document.getElementById("darkBtn");
-      const lightBtn = document.getElementById("lightBtn");
+      const themeBtn = document.getElementById("themeBtn");
       const html = document.documentElement;
 
-      const saved = localStorage.getItem("theme") || "dark";
+      // Check for saved theme preference or prefer-color-scheme
+      const savedTheme = localStorage.getItem("theme");
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      
+      const currentTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+      html.setAttribute("data-theme", currentTheme);
 
-      html.setAttribute("data-theme", saved);
-
-      update(saved);
-
-      darkBtn.onclick = () => setTheme("dark");
-      lightBtn.onclick = () => setTheme("light");
-
-      function setTheme(t) {
-        html.setAttribute("data-theme", t);
-        localStorage.setItem("theme", t);
-        update(t);
-      }
-
-      function update(t) {
-        darkBtn.classList.toggle("active", t === "dark");
-        lightBtn.classList.toggle("active", t === "light");
-      }
+      themeBtn.addEventListener("click", () => {
+        const isDark = html.getAttribute("data-theme") === "dark";
+        const newTheme = isDark ? "light" : "dark";
+        
+        html.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      });
     </script>
   </body>
 </html>
